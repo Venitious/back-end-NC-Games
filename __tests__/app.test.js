@@ -12,7 +12,7 @@ afterAll(() => {
     return db.end(); 
 })
 
-describe('. GET /api/categories', () => {
+describe('GET /api/categories', () => {
     it('should respond with a message 200, the categories length and the typeOf property of each column ', () => {
         return request(app).get('/api/categories')
         .expect(200)
