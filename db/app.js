@@ -5,9 +5,10 @@ const app = express();
 
 app.get('/api/categories', formatCategories)
 
-app.get('/api/reviews', formatReviews )
 
 app.get('/api/reviews/:review_id', formatSingleReview)
+
+app.get('/api/reviews', formatReviews )
 
 app.use(handleCustomErrors)
 

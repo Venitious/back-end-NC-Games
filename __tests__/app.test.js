@@ -27,27 +27,6 @@ describe('GET /api/categories', () => {
     });
 });
 
-describe(' GET /api/reviews/', () => {
-    it('it should respond with a message 200, the categories length & and the typeof property of each column ', () => {
-        return request(app).get('/api/reviews')
-        .expect(200)
-        .then((result) => {
-            const resultArr = result.body.reviews
-            expect(resultArr.length).toBe(13)
-            resultArr.forEach((review) => {
-                expect(typeof review.review_id).toBe('number')
-                expect(typeof review.title).toBe('string')
-                expect(typeof review.category).toBe('string')
-                expect(typeof review.designer).toBe('string')
-                expect(typeof review.owner).toBe('string')
-                expect(typeof review.review_body).toBe('string')
-                expect(typeof review.review_img_url).toBe('string')
-                expect(typeof review.created_at ).toBe('string')
-                expect(typeof review.votes).toBe('number')
-            })        
-        })
-    })
-})
 
 describe('GET/api/reviews/:review_id', () => {
     it('should respond with a message 200 and the specific review and its properties', () => {
@@ -84,4 +63,24 @@ describe('GET/api/reviews/:review_id', () => {
     });
 });
 
-
+describe(' GET /api/reviews/', () => {
+    it('it should respond with a message 200, the categories length & and the typeof property of each column ', () => {
+        return request(app).get('/api/reviews')
+        .expect(200)
+        .then((result) => {
+            const resultArr = result.body.reviews
+            expect(resultArr.length).toBe(13)
+            resultArr.forEach((review) => {
+                expect(typeof review.review_id).toBe('number')
+                expect(typeof review.title).toBe('string')
+                expect(typeof review.category).toBe('string')
+                expect(typeof review.designer).toBe('string')
+                expect(typeof review.owner).toBe('string')
+                expect(typeof review.review_body).toBe('string')
+                expect(typeof review.review_img_url).toBe('string')
+                expect(typeof review.created_at ).toBe('string')
+                expect(typeof review.votes).toBe('number')
+            })        
+        })
+    })
+})

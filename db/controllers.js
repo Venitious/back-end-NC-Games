@@ -9,11 +9,6 @@ exports.formatCategories = (request, response, next) => {
     })
 }
 
-exports.formatReviews = (request, response) => {
-    fetchReviews().then((returnedReviews) => {
-        response.status(200).send({reviews:returnedReviews})
-    })
-}
 
 exports.formatSingleReview = (request, response, next) => {
     const reviewID = request.params.review_id
@@ -23,6 +18,13 @@ exports.formatSingleReview = (request, response, next) => {
     .catch((error) => {
         console.log(error)
         next(error)
+    })
+}
+
+
+exports.formatReviews = (request, response) => {
+    fetchReviews().then((returnedReviews) => {
+        response.status(200).send({reviews:returnedReviews})
     })
 }
 
