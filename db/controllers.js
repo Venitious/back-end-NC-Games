@@ -1,4 +1,7 @@
 const { fetchCategories, fetchReviews, fetchReview } = require("./models")
+const fs = require('fs')
+const endpoints = require('../endpoints.json')
+
 
 exports.formatCategories = (request, response, next) => {
     fetchCategories().then((returnedCategories) => {                
@@ -16,15 +19,23 @@ exports.formatSingleReview = (request, response, next) => {
         response.status(200).send({review: returnedReview})
     })
     .catch((error) => {
-        console.log(error)
         next(error)
     })
 }
 
 
-exports.formatReviews = (request, response) => {
+exports.formatReviews = (request, response, next) => {
     fetchReviews().then((returnedReviews) => {
         response.status(200).send({reviews:returnedReviews})
     })
+    .catch((error) => {
+        next(error)
+    })
+}
+
+
+exports.fetchEndPoints = (request, response, next) => {
+    response.status(200).send(endpoints)
+
 }
 
