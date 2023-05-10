@@ -14,7 +14,6 @@ exports.fetchReviews = () => {
     return db
     .query(sqlQuery)
     .then((result) => {
-        console.log(result.rows)
         return result.rows; 
     })
 }
@@ -36,4 +35,8 @@ exports.fetchReview = (reviewId) => {
         return user
     })
 
+}
+
+exports.retrieveEndpoints = () => {
+    
 }

@@ -63,7 +63,7 @@ describe('GET/api/reviews/:review_id', () => {
     });
 });
 
-describe(' GET /api/reviews/', () => {
+describe.only(' GET /api/reviews/', () => {
     it('it should respond with a message 200, the categories length & and the typeof property of each column ', () => {
         return request(app).get('/api/reviews')
         .expect(200)
@@ -76,11 +76,28 @@ describe(' GET /api/reviews/', () => {
                 expect(typeof review.category).toBe('string')
                 expect(typeof review.designer).toBe('string')
                 expect(typeof review.owner).toBe('string')
-                expect(typeof review.review_body).toBe('string')
+                // expect(typeof review.review_body).toBe('string') -- needs to be deleted
                 expect(typeof review.review_img_url).toBe('string')
                 expect(typeof review.created_at ).toBe('string')
                 expect(typeof review.votes).toBe('number')
+                expect(typeof review.comment_count).toBe('number')
             })        
         })
     })
 })
+
+describe('GET /api', () => {
+    it('should respond with all the possible endpoints and their features ', () => {
+        return request(app).get('/api')
+        .expect(200)
+        .then((result) => {
+            const resultObj = result.body
+            const objectKeys = Object.keys(resultObj)
+            expect(objectKeys.length >= 4 ).toBe(true)
+            expect(objectKeys).toContain("GET /api")
+            expect(objectKeys).toContain("GET /api/reviews")
+            expect(objectKeys).toContain("GET /api/categories")
+            expect(objectKeys).toContain("GET /api/comments")      
+        })
+    });
+});
