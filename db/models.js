@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { doesCategoryExist } = require("./seeds/utils");
+const { doesCategoryExist } = require("./utils");
 
 exports.fetchCategories = () => {
     const sqlQuery = `SELECT * FROM categories;`
@@ -23,10 +23,6 @@ exports.fetchReviews = () => {
     })
 }
 
-// let defaultSqlQuery = `SELECT treasures.*, shop_name FROM treasures
-// LEFT JOIN shops 
-// ON treasures.shop_id = shops.shop_id`
-
 exports.fetchReview = (reviewId) => {
     const sqlInsertion = [reviewId]
     const sqlQuery = `SELECT * FROM reviews
@@ -49,7 +45,8 @@ exports.fetchReview = (reviewId) => {
 exports.fetchCommentsById = (queryId) => {
     const sqlInsertion = [queryId]
     const sqlQuery = `SELECT * FROM comments
-    WHERE review_id = $1;`
+    WHERE review_id = $1
+    ORDER BY created_at DESC;`
     return doesCategoryExist('reviews', 'review_id', queryId)
     .then (() => {
         return db
@@ -60,16 +57,6 @@ exports.fetchCommentsById = (queryId) => {
     })
 }
 
-
-
-// const comments = result.rows[0];
-// if (!comments) {
-// 	return Promise.reject({
-// 	  status: 404,
-// 	  msg: `The id number ${queryId}, is not currently in use`,
-// 	});
-//   }
-// return user
-
-
-//basically the test we used in 'GET/api/reviews/:review_id' was to check that the rows were 0 and in that case return an error, the problem is that now rows containing 0 is a possiblity if that person has not made any comments. - Therefore I need to find a way to check that that review_id exists as a condition 
+exports.postCommentsById = (postRequest, queryId) => {
+    console.log(postRequest, queryId)
+}

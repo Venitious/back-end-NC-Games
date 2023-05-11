@@ -1,18 +1,24 @@
 const express = require('express');
-const { formatCategories, formatReviews, formatSingleReview, fetchEndPoints, formatCommentsById } = require('./controllers');
+const { getCategories, getReviews, getReview, fetchEndPoints, getReviewsById, insertComment } = require('./controllers');
 const { handleServerErrors, handleCustomErrors, handlePsqlErrors } = require('./errorFunc');
 const app = express(); 
 
-app.get('/api/categories', formatCategories)
+
+app.use(express.json());
 
 
-app.get('/api/reviews/:review_id', formatSingleReview)
+app.get('/api/categories', getCategories)
 
-app.get('/api/reviews', formatReviews )
+
+app.get('/api/reviews/:review_id', getReview)
+
+app.get('/api/reviews', getReviews )
 
 app.get('/api', fetchEndPoints)
 
-app.get('/api/reviews/:review_id/comments', formatCommentsById)
+app.get('/api/reviews/:review_id/comments', getReviewsById)
+
+app.post('/api/reviews/:review_id/comments', insertComment)
 
 app.use(handleCustomErrors)
 

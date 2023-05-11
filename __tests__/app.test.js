@@ -109,6 +109,7 @@ describe('GET /api/reviews/:review_id/comments', () => {
         .expect(200)
         .then((result) => {
             const resultArr = result.body.comments
+            expect(resultArr).toBeSortedBy('created_at', {descending: true})
             expect(resultArr.length).toBe(3)
             resultArr.forEach((comment) => {
                 expect(typeof comment.comment_id).toBe('number')
@@ -133,8 +134,8 @@ describe('GET /api/reviews/:review_id/comments', () => {
         return request(app).get('/api/reviews/10000/comments')
         .expect(404)
         .then((result) => {
-            const errMsg = result.body.msg
-            expect(errMsg).toBe('The id number 10000, is not currently in use')
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('The id number 10000, is not currently in use')
         })        
     });
     it('should respond with a 400 if passed a bad request', () => {
@@ -146,3 +147,23 @@ describe('GET /api/reviews/:review_id/comments', () => {
         })    
     });
 });
+
+// describe('POST /api/reviews/:review_id/comments', () => {
+//     it('should post a new comment according to the provided review_id ', () => {
+//         const postRequest = {
+//             username: 'MrGio',
+//             body: 'this is my comment!'
+//         }
+//         return request(app).post('/api/reviews/1/comments')
+//         .send(postRequest)
+//         .expect(201)
+//         .then((result) => {
+//             const resultArr = result.body.post
+//             expect(resultArr.comment_Id).toBe(7)
+//             expect(resultArr.body).toBe('this is my comment!')
+//             expect(resultArr.author).toBe('MrGio')
+//             expect(resultArr.votes).toBe(0)
+//             expect(typeof resultArr.created_at).toBe('string')
+//         })
+//     });
+// });
