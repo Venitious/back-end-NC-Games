@@ -69,7 +69,6 @@ describe(' GET /api/reviews/', () => {
         .expect(200)
         .then((result) => {
             const resultArr = result.body.reviews
-            console.log(resultArr)
             expect(resultArr.length).toBe(13)
             expect(resultArr).toBeSortedBy('created_at', {descending: true})
             resultArr.forEach((review) => {
