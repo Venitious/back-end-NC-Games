@@ -63,24 +63,26 @@ describe('GET/api/reviews/:review_id', () => {
     });
 });
 
-describe.only(' GET /api/reviews/', () => {
+describe(' GET /api/reviews/', () => {
     it('it should respond with a message 200, the categories length & and the typeof property of each column ', () => {
         return request(app).get('/api/reviews')
         .expect(200)
         .then((result) => {
             const resultArr = result.body.reviews
+            console.log(resultArr)
             expect(resultArr.length).toBe(13)
+            expect(resultArr).toBeSortedBy('created_at', {descending: true})
             resultArr.forEach((review) => {
                 expect(typeof review.review_id).toBe('number')
                 expect(typeof review.title).toBe('string')
                 expect(typeof review.category).toBe('string')
                 expect(typeof review.designer).toBe('string')
                 expect(typeof review.owner).toBe('string')
-                // expect(typeof review.review_body).toBe('string') -- needs to be deleted
                 expect(typeof review.review_img_url).toBe('string')
                 expect(typeof review.created_at ).toBe('string')
                 expect(typeof review.votes).toBe('number')
-                expect(typeof review.comment_count).toBe('number')
+                expect(typeof review.comment_count).toBe('string')
+                expect(typeof review.review_body).toBe("undefined") 
             })        
         })
     })
