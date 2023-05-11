@@ -1,4 +1,5 @@
 const db = require("./connection");
+const { doesCategoryExist } = require("./seeds/utils");
 
 exports.fetchCategories = () => {
     const sqlQuery = `SELECT * FROM categories;`
@@ -45,6 +46,30 @@ exports.fetchReview = (reviewId) => {
 
 }
 
-exports.retrieveEndpoints = () => {
-    
+exports.fetchCommentsById = (queryId) => {
+    const sqlInsertion = [queryId]
+    const sqlQuery = `SELECT * FROM comments
+    WHERE review_id = $1;`
+    return doesCategoryExist('reviews', 'review_id', queryId)
+    .then (() => {
+        return db
+        .query(sqlQuery, sqlInsertion)
+        .then((result) => {
+            return result.rows
+        })
+    })
 }
+
+
+
+// const comments = result.rows[0];
+// if (!comments) {
+// 	return Promise.reject({
+// 	  status: 404,
+// 	  msg: `The id number ${queryId}, is not currently in use`,
+// 	});
+//   }
+// return user
+
+
+//basically the test we used in 'GET/api/reviews/:review_id' was to check that the rows were 0 and in that case return an error, the problem is that now rows containing 0 is a possiblity if that person has not made any comments. - Therefore I need to find a way to check that that review_id exists as a condition 
