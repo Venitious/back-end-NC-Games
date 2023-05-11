@@ -56,7 +56,3 @@ exports.fetchCommentsById = (queryId) => {
         })
     })
 }
-
-exports.postCommentsById = (postRequest, queryId) => {
-    console.log(postRequest, queryId)
-}

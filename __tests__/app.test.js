@@ -148,22 +148,4 @@ describe('GET /api/reviews/:review_id/comments', () => {
     });
 });
 
-// describe('POST /api/reviews/:review_id/comments', () => {
-//     it('should post a new comment according to the provided review_id ', () => {
-//         const postRequest = {
-//             username: 'MrGio',
-//             body: 'this is my comment!'
-//         }
-//         return request(app).post('/api/reviews/1/comments')
-//         .send(postRequest)
-//         .expect(201)
-//         .then((result) => {
-//             const resultArr = result.body.post
-//             expect(resultArr.comment_Id).toBe(7)
-//             expect(resultArr.body).toBe('this is my comment!')
-//             expect(resultArr.author).toBe('MrGio')
-//             expect(resultArr.votes).toBe(0)
-//             expect(typeof resultArr.created_at).toBe('string')
-//         })
-//     });
-// });
+

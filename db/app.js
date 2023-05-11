@@ -18,7 +18,6 @@ app.get('/api', fetchEndPoints)
 
 app.get('/api/reviews/:review_id/comments', getReviewsById)
 
-app.post('/api/reviews/:review_id/comments', insertComment)
 
 app.use(handleCustomErrors)
 
