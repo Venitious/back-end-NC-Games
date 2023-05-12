@@ -1,7 +1,5 @@
 const db = require("./connection");
 
-const format = require('pg-format');
-
 const { doesCategoryExist } = require("./utils");
 
 
@@ -79,6 +77,7 @@ exports.postCommentsById = (postRequest, queryId) => {
         const newComment = result.rows[0]
         return newComment;
     })
+}
 
 
 exports.fetchCommentsById = (queryId) => {
