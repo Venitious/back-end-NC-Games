@@ -149,18 +149,31 @@ describe('POST /api/reviews/:review_id/comments', () => {
             expect(errorMessage).toBe('Invalid input')
         })  
     });
-    // it('should return a 400 bad request when the data being passed into the table is the wrong type of data', () => {
-    //     const postRequest = {
-    //         username: 'testUser',
-    //         body: ''
-    //         }
-    //     return request(app).post('/api/reviews/1/comments')
-    //     .send(postRequest)
-    //     .expect(400)
-    //     .then((result) => {
-    //         const errorMessage = result.body.msg
-    //         expect(errorMessage).toBe('Invalid input')
-    //     })  
-    // });
+    it('should return a 400 bad request when the data being passed into the table is the wrong type of data', () => {
+        const postRequest = {
+            username: 1234,
+            body: 'test message'
+            }
+        return request(app).post('/api/reviews/1/comments')
+        .send(postRequest)
+        .expect(400)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Invalid input')
+        })  
+    });
+    it('should return a 404 not found when the data passed into the comment section does not match a username ', () => {
+        const postRequest = {
+            username: 'fakeUser',
+            body: 'test message'
+            }
+            return request(app).post('/api/reviews/10000/comments')
+            .send(postRequest)
+            .expect(404)
+            .then((result) => {
+                const errorMessage = result.body.msg
+                expect(errorMessage).toBe('Input not in use')
+            }) 
+    });
 });
     

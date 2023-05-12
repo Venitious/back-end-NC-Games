@@ -47,7 +47,6 @@ exports.insertComment = (request, response, next) => {
         response.status(201).send({newComment: insertedComment })
     })
     .catch((error) => {
-        console.log(error)
         next(error)
     })
 }

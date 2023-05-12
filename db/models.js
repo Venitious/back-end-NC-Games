@@ -61,6 +61,15 @@ exports.postCommentsById = (postRequest, queryId) => {
     ($1 , $2 , $3)
     RETURNING *;`
 
+    console.log(typeof username, username.length)
+
+    if (typeof body !== 'string' || body.length === 0 || typeof username !== 'string' || username.length === 0) {
+        return Promise.reject({
+            status: 400,
+            msg: `Invalid input`,
+          });
+    }
+
     return db
     .query(sqlQuery, sqlInputs)
     .then ((result) => {
@@ -69,13 +78,3 @@ exports.postCommentsById = (postRequest, queryId) => {
     })
 
 }
-
-// return db
-// .then(() => {
-//     if (typeof body !== 'string' || body.length === 0 ) {
-//         return Promise.reject({
-//             status: 404,
-//             msg: `No user found for review_id: ${reviewId}`,
-//           });
-//     }
-// })
