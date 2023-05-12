@@ -61,8 +61,6 @@ exports.postCommentsById = (postRequest, queryId) => {
     ($1 , $2 , $3)
     RETURNING *;`
 
-    console.log(typeof username, username.length)
-
     if (typeof body !== 'string' || body.length === 0 || typeof username !== 'string' || username.length === 0) {
         return Promise.reject({
             status: 400,
