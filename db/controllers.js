@@ -1,9 +1,10 @@
-const { fetchCategories, fetchReviews, fetchReview } = require("./models")
+const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById } = require("./models")
 const fs = require('fs')
 const endpoints = require('../endpoints.json')
 
 
-exports.formatCategories = (request, response, next) => {
+
+exports.getCategories = (request, response, next) => {
     fetchCategories().then((returnedCategories) => {                
         response.status(200).send({categories: returnedCategories})
     })
@@ -13,7 +14,7 @@ exports.formatCategories = (request, response, next) => {
 }
 
 
-exports.formatSingleReview = (request, response, next) => {
+exports.getReview = (request, response, next) => {
     const reviewID = request.params.review_id
     fetchReview(reviewID).then((returnedReview) => {     
         response.status(200).send({review: returnedReview})
@@ -24,7 +25,7 @@ exports.formatSingleReview = (request, response, next) => {
 }
 
 
-exports.formatReviews = (request, response, next) => {
+exports.getReviews = (request, response, next) => {
     fetchReviews().then((returnedReviews) => {
         response.status(200).send({reviews:returnedReviews})
     })
@@ -36,6 +37,17 @@ exports.formatReviews = (request, response, next) => {
 
 exports.fetchEndPoints = (request, response, next) => {
     response.status(200).send(endpoints)
-
 }
+
+exports.getReviewsById = (request, response, next) => {
+    const queryId = request.params.review_id;
+    fetchCommentsById(queryId).then((returnedComments) => {
+        response.status(200).send({comments:returnedComments})
+    })
+    .catch((error) => {
+        next(error)
+    })
+}
+
+
 
