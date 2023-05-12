@@ -1,6 +1,6 @@
-const db = require("./connection");
+const db = require("./db/connection");
 
-const { doesCategoryExist } = require("./utils");
+const { doesCategoryExist } = require("./db/utils");
 
 
 exports.fetchCategories = () => {

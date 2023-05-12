@@ -1,7 +1,7 @@
 
 const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById } = require("./models")
 const fs = require('fs')
-const endpoints = require('../endpoints.json')
+const endpoints = require('./endpoints.json')
 
 
 exports.getCategories = (request, response, next) => {
