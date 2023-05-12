@@ -69,7 +69,6 @@ describe(' GET /api/reviews/', () => {
         .expect(200)
         .then((result) => {
             const resultArr = result.body.reviews
-            console.log(resultArr)
             expect(resultArr.length).toBe(13)
             expect(resultArr).toBeSortedBy('created_at', {descending: true})
             resultArr.forEach((review) => {
@@ -103,3 +102,50 @@ describe('GET /api', () => {
         })
     });
 });
+
+describe('GET /api/reviews/:review_id/comments', () => {
+    it('should respond with all the comments asociated from that particular review  ', () => {
+        return request(app).get('/api/reviews/2/comments')
+        .expect(200)
+        .then((result) => {
+            const resultArr = result.body.comments
+            expect(resultArr).toBeSortedBy('created_at', {descending: true})
+            expect(resultArr.length).toBe(3)
+            resultArr.forEach((comment) => {
+                expect(typeof comment.comment_id).toBe('number')
+                expect(typeof comment.body).toBe('string')
+                expect(typeof comment.review_id).toBe('number')
+                expect(typeof comment.author).toBe('string')
+                expect(typeof comment.votes).toBe('number')
+                expect(typeof comment.created_at ).toBe('string') 
+            })        
+        })
+        
+    });
+    it('should respond with  a status code 200 & an empty array if passed an existing review_id which has not posted any comments', () => {
+        return request(app).get('/api/reviews/1/comments')
+        .expect(200)
+        .then((result) => {
+            const resultArr = result.body.comments
+            expect(resultArr.length).toBe(0)
+        })        
+    });
+    it('should respond with a 404 not found if passed a review_id which is currently not in use', () => {
+        return request(app).get('/api/reviews/10000/comments')
+        .expect(404)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('The id number 10000, is not currently in use')
+        })        
+    });
+    it('should respond with a 400 if passed a bad request', () => {
+        return request(app).get('/api/reviews/badRequest/comments')
+        .expect(400)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Invalid input') 
+        })    
+    });
+});
+
+

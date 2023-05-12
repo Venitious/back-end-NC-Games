@@ -1,4 +1,5 @@
 const db = require("./connection");
+const { doesCategoryExist } = require("./utils");
 
 exports.fetchCategories = () => {
     const sqlQuery = `SELECT * FROM categories;`
@@ -22,10 +23,6 @@ exports.fetchReviews = () => {
     })
 }
 
-// let defaultSqlQuery = `SELECT treasures.*, shop_name FROM treasures
-// LEFT JOIN shops 
-// ON treasures.shop_id = shops.shop_id`
-
 exports.fetchReview = (reviewId) => {
     const sqlInsertion = [reviewId]
     const sqlQuery = `SELECT * FROM reviews
@@ -45,6 +42,17 @@ exports.fetchReview = (reviewId) => {
 
 }
 
-exports.retrieveEndpoints = () => {
-    
+exports.fetchCommentsById = (queryId) => {
+    const sqlInsertion = [queryId]
+    const sqlQuery = `SELECT * FROM comments
+    WHERE review_id = $1
+    ORDER BY created_at DESC;`
+    return doesCategoryExist('reviews', 'review_id', queryId)
+    .then (() => {
+        return db
+        .query(sqlQuery, sqlInsertion)
+        .then((result) => {
+            return result.rows
+        })
+    })
 }
