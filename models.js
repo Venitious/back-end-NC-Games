@@ -1,6 +1,6 @@
 const db = require("./db/connection");
 
-const { doesCategoryExist } = require("./db/utils");
+const { doesCategoryExist } = require("./utils");
 
 
 exports.fetchCategories = () => {
@@ -45,11 +45,6 @@ exports.fetchReview = (reviewId) => {
 
 }
 
-
-exports.retrieveEndpoints = () => {
-    
-}
-
 exports.postCommentsById = (postRequest, queryId) => {
     const username = postRequest.username;
     const body = postRequest.body;
@@ -85,7 +80,7 @@ exports.fetchCommentsById = (queryId) => {
     const sqlQuery = `SELECT * FROM comments
     WHERE review_id = $1
     ORDER BY created_at DESC;`
-    return doesCategoryExist('reviews', 'review_id', queryId)
+    return doesCategoryExist(queryId)
     .then (() => {
         return db
         .query(sqlQuery, sqlInsertion)
