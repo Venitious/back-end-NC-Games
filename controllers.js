@@ -63,14 +63,15 @@ exports.insertComment = (request, response, next) => {
 }
     
 exports.updateVotes = (request, response, next) => {
+
     const votes = request.body.inc_votes
     const review_id = request.params.review_id
-    patchVotes(votes, review_id)
-    .then((updatedReview) => {
-    response.status(201).send({updatedReview: updatedReview })
+
+    patchVotes(votes, review_id).then((updatedReview) => {
+        response.status(201).send({updatedReview: updatedReview })
     })
     .catch((error) => {
-    next(error)
+        next(error)
     })
-    }
+ }
     
