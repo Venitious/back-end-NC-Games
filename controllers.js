@@ -1,5 +1,5 @@
 
-const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById } = require("./models")
+const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById, patchVotes } = require("./models")
 const fs = require('fs')
 const endpoints = require('./endpoints.json')
 
@@ -61,4 +61,16 @@ exports.insertComment = (request, response, next) => {
         next(error)
     })
 }
+    
+exports.updateVotes = (request, response, next) => {
+    const votes = request.body.inc_votes
+    const review_id = request.params.review_id
+    patchVotes(votes, review_id)
+    .then((updatedReview) => {
+    response.status(201).send({updatedReview: updatedReview })
+    })
+    .catch((error) => {
+    next(error)
+    })
+    }
     

@@ -1,7 +1,6 @@
 const express = require('express');
 
-
-const { getCategories, getReviews, getReview, fetchEndPoints, getReviewsById, insertComment } = require('./controllers');
+const { getCategories, getReviews, getReview, fetchEndPoints, getReviewsById, insertComment, updateVotes } = require('./controllers');
 const { handleServerErrors, handleCustomErrors, handlePsqlErrors } = require('./errorFunc');
 const app = express(); 
 
@@ -21,6 +20,8 @@ app.get('/api', fetchEndPoints)
 app.post('/api/reviews/:review_id/comments', insertComment)
 
 app.get('/api/reviews/:review_id/comments', getReviewsById)
+
+app.patch('/api/reviews/:review_id', updateVotes)
 
 app.use(handleCustomErrors)
 
