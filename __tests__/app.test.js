@@ -223,5 +223,42 @@ describe('GET /api/reviews/:review_id/comments', () => {
     });
 });
 
+// describe('PATCH /api/reviews/:review_id', () => {
+//     it.only('it should return with a 201 and updated the specific review   ', () => {
+
+//         const votesUpdate = {inc_votes : 20}
+
+//         return request(app).patch('/api/reviews/1')
+//         .send(votesUpdate)
+//         .expect(201)
+//         .then((result) => {
+//             const resultArr = result.body.patchedReview
+//             expect(resultArr.votes).toBe(21)
+//             expect(resultArr.review_id).toBe(1)
+//             expect(resultArr.title).toBe('Agricola')
+//             expect(resultArr.category).toBe('euro game')
+//             expect(resultArr.designer).toBe('Uwe Rosenberg ')
+//             expect(resultArr.owner).toBe('mallionaire ')
+//             expect(resultArr.review_body).toBe('Farmyard fun!')
+//             expect(resultArr.review_img_url).toBe('https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?w=700&h=700')
+//             expect(resultArr.created_at).toBe('2021-01-18 10:00:20.514')
+
+//         })
+//     });
+// });
+// Request body accepts:
+
+// an object in the form { inc_votes: newVote }
+
+// newVote will indicate how much the votes property in the database should be updated by
+// e.g.
+
+// { inc_votes : 1 } would increment the current review's vote property by 1
+
+// { inc_votes : -100} would decrement the current review's vote property by 100
+
+// Responds with:
+
+// the updated review
 
 
