@@ -48,3 +48,8 @@ exports.fetchReview = (reviewId) => {
 exports.retrieveEndpoints = () => {
     
 }
+
+exports.postCommentsById = (postRequest, queryId) => {
+    console.log(postRequest, queryId)
+    }
+    
