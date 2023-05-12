@@ -1,7 +1,7 @@
+
 const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById } = require("./models")
 const fs = require('fs')
 const endpoints = require('../endpoints.json')
-
 
 
 exports.getCategories = (request, response, next) => {
@@ -50,4 +50,15 @@ exports.getReviewsById = (request, response, next) => {
 }
 
 
-
+exports.insertComment = (request, response, next) => {
+    const sentPostRequest = request.body
+    const review_id = request.params
+    postCommentsById(sentPostRequest, review_id)
+    .then((insertedComment) => {
+        response.status(201).send({newComment: insertedComment })
+    })
+    .catch((error) => {
+        next(error)
+    })
+}
+    

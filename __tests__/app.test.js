@@ -103,6 +103,81 @@ describe('GET /api', () => {
     });
 });
 
+
+
+describe('POST /api/reviews/:review_id/comments', () => {
+    it('should post a new comment according to the provided review_id ', () => {
+        const postRequest = {
+            username: 'mallionaire',
+            body: 'this is the test comment!'
+        }
+        return request(app).post('/api/reviews/1/comments')
+        .send(postRequest)
+        .expect(201)
+        .then((result) => {
+            const resultArr = result.body.newComment
+            expect(resultArr.comment_id).toBe(7)
+            expect(resultArr.review_id).toBe(1)
+            expect(resultArr.body).toBe('this is the test comment!')
+            expect(resultArr.author).toBe('mallionaire')
+            expect(resultArr.votes).toBe(0)
+            expect(typeof resultArr.created_at).toBe('string')
+        })
+    });
+    it('should return a 404 not found and a message when passed a review_id which is not in existance ', () => {
+        const postRequest = {
+            username: 'mallionaire',
+            body: 'this is the test comment!'
+            }
+        return request(app).post('/api/reviews/10000/comments')
+        .send(postRequest)
+        .expect(404)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Input not in use')
+        })        
+    });
+    it('should return 400 bad request when passed an invalid review_id', () => {
+        const postRequest = {
+            username: 'mallionaire',
+            body: 'this is the test comment!'
+            }
+        return request(app).post('/api/reviews/badRequest/comments')
+        .send(postRequest)
+        .expect(400)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Invalid input')
+        })  
+    });
+    it('should return a 400 bad request when the data being passed into the table is the wrong type of data', () => {
+        const postRequest = {
+            username: 1234,
+            body: 'test message'
+            }
+        return request(app).post('/api/reviews/1/comments')
+        .send(postRequest)
+        .expect(400)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Invalid input')
+        })  
+    });
+    it('should return a 404 not found when the data passed into the comment section does not match a username ', () => {
+        const postRequest = {
+            username: 'fakeUser',
+            body: 'test message'
+            }
+            return request(app).post('/api/reviews/10000/comments')
+            .send(postRequest)
+            .expect(404)
+            .then((result) => {
+                const errorMessage = result.body.msg
+                expect(errorMessage).toBe('Input not in use')
+            }) 
+    });
+});
+    
 describe('GET /api/reviews/:review_id/comments', () => {
     it('should respond with all the comments asociated from that particular review  ', () => {
         return request(app).get('/api/reviews/2/comments')
@@ -147,5 +222,6 @@ describe('GET /api/reviews/:review_id/comments', () => {
         })    
     });
 });
+
 
 

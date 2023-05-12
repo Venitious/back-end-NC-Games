@@ -1,5 +1,9 @@
 const db = require("./connection");
+
+const format = require('pg-format');
+
 const { doesCategoryExist } = require("./utils");
+
 
 exports.fetchCategories = () => {
     const sqlQuery = `SELECT * FROM categories;`
@@ -23,6 +27,7 @@ exports.fetchReviews = () => {
     })
 }
 
+
 exports.fetchReview = (reviewId) => {
     const sqlInsertion = [reviewId]
     const sqlQuery = `SELECT * FROM reviews
@@ -41,6 +46,40 @@ exports.fetchReview = (reviewId) => {
     })
 
 }
+
+
+exports.retrieveEndpoints = () => {
+    
+}
+
+exports.postCommentsById = (postRequest, queryId) => {
+    const username = postRequest.username;
+    const body = postRequest.body;
+    const reviewId = queryId.review_id;
+    
+    const sqlInputs = [username, body, reviewId]
+
+    const sqlQuery =     
+    `INSERT INTO comments
+    (author, body, review_id)
+    VALUES
+    ($1 , $2 , $3)
+    RETURNING *;`
+
+    if (typeof body !== 'string' || body.length === 0 || typeof username !== 'string' || username.length === 0) {
+        return Promise.reject({
+            status: 400,
+            msg: `Invalid input`,
+          });
+    }
+
+    return db
+    .query(sqlQuery, sqlInputs)
+    .then ((result) => {
+        const newComment = result.rows[0]
+        return newComment;
+    })
+
 
 exports.fetchCommentsById = (queryId) => {
     const sqlInsertion = [queryId]
