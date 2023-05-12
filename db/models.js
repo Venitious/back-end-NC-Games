@@ -96,7 +96,6 @@ exports.fetchCommentsById = (queryId) => {
 }
 
 exports.patchVotes = (votes, queryId) => {
-    console.log(queryId)
     const sqlInputs = [votes, queryId]
     const sqlQuery = 
     `UPDATE reviews
