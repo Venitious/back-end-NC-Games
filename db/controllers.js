@@ -69,5 +69,8 @@ exports.updateVotes = (request, response, next) => {
     .then((updatedReview) => {
         response.status(201).send({updatedReview: updatedReview })
     })
+    .catch((error) => {
+        next(error)
+    })
 }
     

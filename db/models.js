@@ -85,7 +85,7 @@ exports.fetchCommentsById = (queryId) => {
     const sqlQuery = `SELECT * FROM comments
     WHERE review_id = $1
     ORDER BY created_at DESC;`
-    return doesCategoryExist('reviews', 'review_id', queryId)
+    return doesCategoryExist(queryId)
     .then (() => {
         return db
         .query(sqlQuery, sqlInsertion)
@@ -96,6 +96,25 @@ exports.fetchCommentsById = (queryId) => {
 }
 
 exports.patchVotes = (votes, queryId) => {
-    const sqlQuery = `SELECT * FROM reviews
-    WHERE review_id = $1;`
+    console.log(queryId)
+    const sqlInputs = [votes, queryId]
+    const sqlQuery = 
+    `UPDATE reviews
+    SET 
+    votes = votes + $1
+    WHERE review_id = $2
+    RETURNING *;`
+
+    return db
+    .query(sqlQuery, sqlInputs)
+    .then((result) => {
+        const updatedReview = result.rows[0]
+        if (!updatedReview){
+            return Promise.reject({
+                status: 404,
+                msg: `Input not in use`
+            })
+        }
+        return updatedReview
+    })
 }

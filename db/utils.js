@@ -1,6 +1,6 @@
 const db = require("./connection");
 
-exports.doesCategoryExist = (table, column, value) => {
+exports.doesCategoryExist = (value) => {
 
 	const queryStr = ('SELECT * FROM reviews WHERE review_id = $1;');
 	return db

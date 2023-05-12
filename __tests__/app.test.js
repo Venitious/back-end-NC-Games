@@ -223,42 +223,49 @@ describe('GET /api/reviews/:review_id/comments', () => {
     });
 });
 
-// describe('PATCH /api/reviews/:review_id', () => {
-//     it.only('it should return with a 201 and updated the specific review   ', () => {
+describe('PATCH /api/reviews/:review_id', () => {
+    it('it should return with a 201 and updated the specific review   ', () => {
 
-//         const votesUpdate = {inc_votes : 20}
+        const votesUpdate = {inc_votes : 20}
 
-//         return request(app).patch('/api/reviews/1')
-//         .send(votesUpdate)
-//         .expect(201)
-//         .then((result) => {
-//             const resultArr = result.body.patchedReview
-//             expect(resultArr.votes).toBe(21)
-//             expect(resultArr.review_id).toBe(1)
-//             expect(resultArr.title).toBe('Agricola')
-//             expect(resultArr.category).toBe('euro game')
-//             expect(resultArr.designer).toBe('Uwe Rosenberg ')
-//             expect(resultArr.owner).toBe('mallionaire ')
-//             expect(resultArr.review_body).toBe('Farmyard fun!')
-//             expect(resultArr.review_img_url).toBe('https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?w=700&h=700')
-//             expect(resultArr.created_at).toBe('2021-01-18 10:00:20.514')
+        return request(app).patch('/api/reviews/1')
+        .send(votesUpdate)
+        .expect(201)
+        .then((result) => {
+            const resultArr = result.body.updatedReview
+            expect(resultArr.votes).toBe(21)
+            expect(resultArr.review_id).toBe(1)
+            expect(resultArr.title).toBe('Agricola')
+            expect(resultArr.category).toBe('euro game')
+            expect(resultArr.designer).toBe('Uwe Rosenberg')
+            expect(resultArr.owner).toBe('mallionaire')
+            expect(resultArr.review_body).toBe('Farmyard fun!')
+            expect(resultArr.review_img_url).toBe('https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?w=700&h=700')
+            expect(resultArr.created_at).toBe('2021-01-18T10:00:20.514Z')
+        })
+    });
+    it('it should return with 404 if passed a review_id which is currently not in use  ', () => {
 
-//         })
-//     });
-// });
-// Request body accepts:
+        const votesUpdate = {inc_votes : 20}
+        return request(app).patch('/api/reviews/10000')
+        .send(votesUpdate)
+        .expect(404)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Input not in use')
+        })         
+    });
+    it('should return with a 400 if passed a bad request as the review_id', () => {
+        const votesUpdate = {inc_votes : 20}
+        return request(app).patch('/api/reviews/badRequest')
+        .send(votesUpdate)
+        .expect(400)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Invalid input')
+        })
+    });
+});
 
-// an object in the form { inc_votes: newVote }
-
-// newVote will indicate how much the votes property in the database should be updated by
-// e.g.
-
-// { inc_votes : 1 } would increment the current review's vote property by 1
-
-// { inc_votes : -100} would decrement the current review's vote property by 100
-
-// Responds with:
-
-// the updated review
 
 
