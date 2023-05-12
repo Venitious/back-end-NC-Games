@@ -69,7 +69,6 @@ describe(' GET /api/reviews/', () => {
         .expect(200)
         .then((result) => {
             const resultArr = result.body.reviews
-            console.log(resultArr)
             expect(resultArr.length).toBe(13)
             expect(resultArr).toBeSortedBy('created_at', {descending: true})
             resultArr.forEach((review) => {
@@ -105,23 +104,63 @@ describe('GET /api', () => {
 });
 
 
-// describe.only('POST /api/reviews/:review_id/comments', () => {
-//     it('should post a new comment according to the provided review_id ', () => {
-//         const postRequest = {
-//         username: 'MrGio',
-//         body: 'this is my comment!'
-//         }
-//         return request(app).post('/api/reviews/1/comments')
-//         .send(postRequest)
-//         .expect(201)
-//         .then((result) => {
-//             const resultArr = result.body.post
-//             expect(resultArr.comment_Id).toBe(7)
-//             expect(resultArr.body).toBe('this is my comment!')
-//             expect(resultArr.author).toBe('MrGio')
-//             expect(resultArr.votes).toBe(0)
-//             expect(typeof resultArr.created_at).toBe('string')
-//         })
-//     });
-// });
+describe('POST /api/reviews/:review_id/comments', () => {
+    it('should post a new comment according to the provided review_id ', () => {
+        const postRequest = {
+            username: 'mallionaire',
+            body: 'this is the test comment!'
+        }
+        return request(app).post('/api/reviews/1/comments')
+        .send(postRequest)
+        .expect(201)
+        .then((result) => {
+            const resultArr = result.body.newComment
+            expect(resultArr.comment_id).toBe(7)
+            expect(resultArr.review_id).toBe(1)
+            expect(resultArr.body).toBe('this is the test comment!')
+            expect(resultArr.author).toBe('mallionaire')
+            expect(resultArr.votes).toBe(0)
+            expect(typeof resultArr.created_at).toBe('string')
+        })
+    });
+    it('should return a 404 not found and a message when passed a review_id which is not in existance ', () => {
+        const postRequest = {
+            username: 'mallionaire',
+            body: 'this is the test comment!'
+            }
+        return request(app).post('/api/reviews/10000/comments')
+        .send(postRequest)
+        .expect(404)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Input not in use')
+        })        
+    });
+    it('should return 400 bad request when passed an invalid review_id', () => {
+        const postRequest = {
+            username: 'mallionaire',
+            body: 'this is the test comment!'
+            }
+        return request(app).post('/api/reviews/badRequest/comments')
+        .send(postRequest)
+        .expect(400)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Invalid input')
+        })  
+    });
+    // it('should return a 400 bad request when the data being passed into the table is the wrong type of data', () => {
+    //     const postRequest = {
+    //         username: 'testUser',
+    //         body: ''
+    //         }
+    //     return request(app).post('/api/reviews/1/comments')
+    //     .send(postRequest)
+    //     .expect(400)
+    //     .then((result) => {
+    //         const errorMessage = result.body.msg
+    //         expect(errorMessage).toBe('Invalid input')
+    //     })  
+    // });
+});
     

@@ -43,8 +43,12 @@ exports.insertComment = (request, response, next) => {
     const sentPostRequest = request.body
     const review_id = request.params
     postCommentsById(sentPostRequest, review_id)
-    .then((returnedPost) => {
-        response.status(201).send({newComment: returnedPost })
+    .then((insertedComment) => {
+        response.status(201).send({newComment: insertedComment })
+    })
+    .catch((error) => {
+        console.log(error)
+        next(error)
     })
 }
     

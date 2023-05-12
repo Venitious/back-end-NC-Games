@@ -1,4 +1,5 @@
 const db = require("./connection");
+const format = require('pg-format');
 
 exports.fetchCategories = () => {
     const sqlQuery = `SELECT * FROM categories;`
@@ -22,9 +23,6 @@ exports.fetchReviews = () => {
     })
 }
 
-// let defaultSqlQuery = `SELECT treasures.*, shop_name FROM treasures
-// LEFT JOIN shops 
-// ON treasures.shop_id = shops.shop_id`
 
 exports.fetchReview = (reviewId) => {
     const sqlInsertion = [reviewId]
@@ -50,6 +48,34 @@ exports.retrieveEndpoints = () => {
 }
 
 exports.postCommentsById = (postRequest, queryId) => {
-    console.log(postRequest, queryId)
-    }
+    const username = postRequest.username;
+    const body = postRequest.body;
+    const reviewId = queryId.review_id;
     
+    const sqlInputs = [username, body, reviewId]
+
+    const sqlQuery =     
+    `INSERT INTO comments
+    (author, body, review_id)
+    VALUES
+    ($1 , $2 , $3)
+    RETURNING *;`
+
+    return db
+    .query(sqlQuery, sqlInputs)
+    .then ((result) => {
+        const newComment = result.rows[0]
+        return newComment;
+    })
+
+}
+
+// return db
+// .then(() => {
+//     if (typeof body !== 'string' || body.length === 0 ) {
+//         return Promise.reject({
+//             status: 404,
+//             msg: `No user found for review_id: ${reviewId}`,
+//           });
+//     }
+// })
