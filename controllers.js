@@ -1,5 +1,5 @@
 
-const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById, patchVotes } = require("./models")
+const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById, patchVotes, deleteComment } = require("./models")
 const fs = require('fs')
 const endpoints = require('./endpoints.json')
 
@@ -74,4 +74,10 @@ exports.updateVotes = (request, response, next) => {
         next(error)
     })
  }
-    
+
+ exports.getDeletedComment = (request, response, next) => {
+    const comment_id = request.params.comment_id
+    deleteComment(comment_id).then(() => {
+        response.status(204).send()
+    })
+ }

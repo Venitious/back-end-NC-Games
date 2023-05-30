@@ -108,7 +108,27 @@ exports.patchVotes = (votes, queryId) => {
                 status: 404,
                 msg: `Input not in use`
             })
+        }         
+        if (updatedReview.votes < 0){
+            return Promise.reject({
+                status:404,
+                msg: 'Votes cannot be negative'
+            })
         }
         return updatedReview
+    })
+}
+
+exports.deleteComment = (comment_id) => {
+    const sqlQuery = `DELETE FROM comments WHERE comment_id = $1;`
+    return db
+    .query(sqlQuery, [comment_id])
+    .then ((result) => {
+        console.log(Object.keys(result.rows))
+        .query('SELECT * FROM comments;')
+        .then ((result) => {
+            console.log(result.rows)
+        })
+        return result.rows
     })
 }

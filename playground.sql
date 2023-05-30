@@ -1,5 +1,5 @@
 \c nc_games_test
 
-SELECT * FROM comments
-    WHERE review_id = '2'
-    ORDER BY created_at DESC;
+DELETE FROM comments WHERE comment_id = '3';
+
+SELECT * FROM comments; 

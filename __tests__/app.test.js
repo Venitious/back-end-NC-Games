@@ -232,7 +232,7 @@ describe('PATCH /api/reviews/:review_id', () => {
     .send(votesUpdate)
     .expect(201)
     .then((result) => {
-    const resultArr = result.body.updatedReview
+        const resultArr = result.body.updatedReview
         expect(resultArr.votes).toBe(21)
         expect(resultArr.review_id).toBe(1)
         expect(resultArr.title).toBe('Agricola')
@@ -266,5 +266,45 @@ describe('PATCH /api/reviews/:review_id', () => {
             expect(errorMessage).toBe('Invalid input')
         })
     });
+    it('should be able to make a negative deduction using the vote updates', () => {
+    
+    const votesUpdate = {inc_votes : -1}
+    
+    return request(app).patch('/api/reviews/1')
+    .send(votesUpdate)
+    .expect(201)
+    .then((result) => {
+        const resultArr = result.body.updatedReview
+        expect(resultArr.votes).toBe(0)
+        expect(resultArr.review_id).toBe(1)
+        expect(resultArr.title).toBe('Agricola')
+        expect(resultArr.category).toBe('euro game')
+        expect(resultArr.designer).toBe('Uwe Rosenberg')
+        expect(resultArr.owner).toBe('mallionaire')
+        expect(resultArr.review_body).toBe('Farmyard fun!')
+        expect(resultArr.review_img_url).toBe('https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?w=700&h=700')
+        expect(resultArr.created_at).toBe('2021-01-18T10:00:20.514Z')
+        })
+    });
+    it('should return a 404 if making a vote deduction whcih is less than 0', () => {
+        const votesUpdate = {inc_votes : -10}
+        return request(app).patch('/api/reviews/1')
+        .send(votesUpdate)
+        .expect(404)
+        .then((result) => {
+            const errorMessage = result.body.msg
+            expect(errorMessage).toBe('Votes cannot be negative')
+        })         
+    });
 });
 
+// describe('DELETE /api/comments/:comment_id', () => {
+//     it('should delete the given comment associated with that comment_id, returning a 204 and no content', () => {
+//         return request(app).delete('/api/comments/3')
+//         .expect(204)
+//         .then ((result) => {
+//             const resultObj = Object.keys(result.body)
+//             expect(resultObj.length).toBe(0)
+//         })  
+//     });
+// });
