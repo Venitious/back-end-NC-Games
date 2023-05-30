@@ -64,7 +64,7 @@ describe('GET/api/reviews/:review_id', () => {
 });
 
 describe(' GET /api/reviews/', () => {
-    it('it should respond with a message 200, the categories length & and the typeof property of each column ', () => {
+    it('it should respond with a message 200, the categories length & the typeof property of each column ', () => {
         return request(app).get('/api/reviews')
         .expect(200)
         .then((result) => {
