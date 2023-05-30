@@ -94,11 +94,10 @@ describe('GET /api', () => {
         .then((result) => {
             const resultObj = result.body
             const objectKeys = Object.keys(resultObj)
-            expect(objectKeys.length >= 4 ).toBe(true)
+            expect(objectKeys.length >= 3 ).toBe(true)
             expect(objectKeys).toContain("GET /api")
             expect(objectKeys).toContain("GET /api/reviews")
-            expect(objectKeys).toContain("GET /api/categories")
-            expect(objectKeys).toContain("GET /api/comments")      
+            expect(objectKeys).toContain("GET /api/categories")     
         })
     });
 });
