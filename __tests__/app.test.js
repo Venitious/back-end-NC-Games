@@ -97,7 +97,9 @@ describe('GET /api', () => {
             expect(objectKeys.length >= 3 ).toBe(true)
             expect(objectKeys).toContain("GET /api")
             expect(objectKeys).toContain("GET /api/reviews")
-            expect(objectKeys).toContain("GET /api/categories")     
+            expect(objectKeys).toContain("GET /api/categories") 
+            expect(objectKeys).toContain("GET /api/reviews/:review_id")
+            expect(objectKeys).toContain("POST /api/reviews/:review_id/comments")   
         })
     });
 });
