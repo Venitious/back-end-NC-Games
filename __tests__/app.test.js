@@ -287,16 +287,6 @@ describe('PATCH /api/reviews/:review_id', () => {
         expect(resultArr.created_at).toBe('2021-01-18T10:00:20.514Z')
         })
     });
-    it('should return a 404 if making a vote deduction whcih is less than 0', () => {
-        const votesUpdate = {inc_votes : -10}
-        return request(app).patch('/api/reviews/1')
-        .send(votesUpdate)
-        .expect(404)
-        .then((result) => {
-            const errorMessage = result.body.msg
-            expect(errorMessage).toBe('Votes cannot be negative')
-        })         
-    });
 });
 
 // describe('DELETE /api/comments/:comment_id', () => {

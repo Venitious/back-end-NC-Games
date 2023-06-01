@@ -109,12 +109,7 @@ exports.patchVotes = (votes, queryId) => {
                 msg: `Input not in use`
             })
         }         
-        if (updatedReview.votes < 0){
-            return Promise.reject({
-                status:404,
-                msg: 'Votes cannot be negative'
-            })
-        }
+
         return updatedReview
     })
 }
