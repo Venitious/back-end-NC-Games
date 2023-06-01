@@ -27,6 +27,25 @@ describe('GET /api/categories', () => {
     });
 });
 
+describe('GET /api/users', () => {
+    it('should respond with a message 200, and all the users', () => {
+        return request(app).get('/api/users')
+        .expect(200)
+        .then((result) => {
+            const resultArr = result.body.users
+            console.log(JSON.stringify(result.body))
+            expect(resultArr.length).toBe(4)
+            resultArr.forEach((user) => {
+                expect(Object.keys(user).length).toBe(3)
+                expect(typeof user.username).toBe('string')
+                expect(typeof user.name).toBe('string')
+                expect(typeof user.avatar_url).toBe('string')
+            })
+        })
+        
+    });
+})
+
 
 describe('GET/api/reviews/:review_id', () => {
     it('should respond with a message 200 and the specific review and its properties', () => {

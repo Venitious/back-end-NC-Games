@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const { getCategories, getReviews, getReview, fetchEndPoints, getReviewsById, insertComment, updateVotes, getDeletedComment } = require('./controllers');
+const { getCategories, getReviews, getReview, fetchEndPoints, getReviewsById, insertComment, updateVotes, getDeletedComment, getUsers } = require('./controllers');
 const { handleServerErrors, handleCustomErrors, handlePsqlErrors } = require('./errorFunc');
 const app = express(); 
 
@@ -25,6 +25,8 @@ app.get('/api/reviews/:review_id/comments', getReviewsById)
 app.patch('/api/reviews/:review_id', updateVotes)
 
 app.delete('/api/comments/:comment_id', getDeletedComment)
+
+app.get('/api/users', getUsers)
 
 app.use(handleCustomErrors)
 

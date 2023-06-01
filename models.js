@@ -12,6 +12,15 @@ exports.fetchCategories = () => {
     })
 }
 
+exports.fetchUsers = () => {
+    const sqlQuery = `SELECT * FROM users;`
+    return db
+    .query(sqlQuery)
+    .then((result) => {
+        return result.rows;
+    })
+}
+
 exports.fetchReviews = () => {   
     const sqlQuery = `SELECT reviews.review_id, reviews.title, reviews.category, reviews.designer, reviews.owner, reviews.review_img_url, reviews.created_at, reviews.votes, COUNT(comments.review_id) AS comment_count FROM reviews
     LEFT JOIN comments

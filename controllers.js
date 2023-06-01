@@ -1,5 +1,5 @@
 
-const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById, patchVotes, deleteComment } = require("./models")
+const { fetchCategories, fetchReviews, fetchReview, fetchCommentsById, postCommentsById, patchVotes, deleteComment, fetchUsers } = require("./models")
 const fs = require('fs')
 const endpoints = require('./endpoints.json')
 
@@ -10,6 +10,12 @@ exports.getCategories = (request, response, next) => {
     })
     .catch((error)=> {
         next(error)
+    })
+}
+
+exports.getUsers = (request, response, next) => {
+    fetchUsers().then((returnedUsers) => {
+        response.status(200).send({users: returnedUsers})
     })
 }
 
