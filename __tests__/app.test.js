@@ -33,7 +33,6 @@ describe('GET /api/users', () => {
         .expect(200)
         .then((result) => {
             const resultArr = result.body.users
-            console.log(JSON.stringify(result.body))
             expect(resultArr.length).toBe(4)
             resultArr.forEach((user) => {
                 expect(Object.keys(user).length).toBe(3)
@@ -307,15 +306,12 @@ describe('PATCH /api/reviews/:review_id', () => {
         expect(resultArr.created_at).toBe('2021-01-18T10:00:20.514Z')
         })
     });
+
 });
 
-// describe('DELETE /api/comments/:comment_id', () => {
-//     it('should delete the given comment associated with that comment_id, returning a 204 and no content', () => {
-//         return request(app).delete('/api/comments/3')
-//         .expect(204)
-//         .then ((result) => {
-//             const resultObj = Object.keys(result.body)
-//             expect(resultObj.length).toBe(0)
-//         })  
-//     });
-// });
+describe('DELETE /api/comments/:comment_id', () => {
+    it('should delete the given comment associated with that comment_id, returning a 204 and no content', () => {
+        return request(app).delete('/api/comments/3')
+        .expect(204)
+    });
+});

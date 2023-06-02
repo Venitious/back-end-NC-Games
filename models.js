@@ -128,11 +128,6 @@ exports.deleteComment = (comment_id) => {
     return db
     .query(sqlQuery, [comment_id])
     .then ((result) => {
-        console.log(Object.keys(result.rows))
-        .query('SELECT * FROM comments;')
-        .then ((result) => {
-            console.log(result.rows)
-        })
         return result.rows
     })
 }
