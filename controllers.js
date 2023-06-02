@@ -45,7 +45,7 @@ exports.fetchEndPoints = (request, response, next) => {
     response.status(200).send(endpoints)
 }
 
-exports.getReviewsById = (request, response, next) => {
+exports.getCommentsById = (request, response, next) => {
     const queryId = request.params.review_id;
     fetchCommentsById(queryId).then((returnedComments) => {
         response.status(200).send({comments:returnedComments})

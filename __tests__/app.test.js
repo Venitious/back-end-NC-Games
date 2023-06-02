@@ -127,6 +127,7 @@ describe('GET /api', () => {
 
 describe('POST /api/reviews/:review_id/comments', () => {
     it('should post a new comment according to the provided review_id ', () => {
+
         const postRequest = {
             username: 'mallionaire',
             body: 'this is the test comment!'
@@ -204,7 +205,7 @@ describe('GET /api/reviews/:review_id/comments', () => {
         .expect(200)
         .then((result) => {
             const resultArr = result.body.comments
-            expect(resultArr).toBeSortedBy('created_at', {descending: true})
+            expect(resultArr).toBeSortedBy('created_at', {descending: false})
             expect(resultArr.length).toBe(3)
             resultArr.forEach((comment) => {
                 expect(typeof comment.comment_id).toBe('number')

@@ -36,7 +36,7 @@
     "description": "serves a single review",
     "queries": [],
     "exampleResponse": {
-      "categories": [
+      "review": [
         {
           "title": "One Night Ultimate Werewolf",
           "designer": "Akihisa Okui",
@@ -54,7 +54,7 @@
     "description": "Adds a new comment to the given review",
     "queries": [],
     "exampleResponse": {
-      "categories": [
+      "newComment": [
         {
           "comment": {
             "comment_id": 7,

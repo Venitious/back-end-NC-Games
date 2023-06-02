@@ -88,7 +88,7 @@ exports.fetchCommentsById = (queryId) => {
     const sqlInsertion = [queryId]
     const sqlQuery = `SELECT * FROM comments
     WHERE review_id = $1
-    ORDER BY created_at DESC;`
+    ORDER BY created_at ASC;`
     return doesCategoryExist(queryId)
     .then (() => {
         return db
